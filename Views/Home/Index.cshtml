@@ -1,0 +1,203 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
+<body>
+    <h3>
+        @Html.ActionLink("Enter Limits for Numbers", "UserInput")
+    </h3>
+    <h5>
+        <p>
+
+            5000 Random number of integer, float and double are generated for ploting.
+
+        </p>
+    </h5>
+    @if (ViewBag.DataPoints1 != "")
+    {
+        <div id="chartContainer" style="height: 370px; width: 100%; margin-bottom: 15px;"></div>
+
+        <div>
+            <p>
+                Above plot illustrate that generating random integer numbers requires a long depth. It is not guaranteed that number is not repetating.
+            </p>
+            <hr />
+        </div>
+
+    }
+    @if (ViewBag.DataPoints2 != "")
+    {
+        <div id="chartContainer2" style="height: 370px; width: 100%; margin-bottom: 15px;"></div>
+
+        <div>
+            <p>
+                Above plot illustrate that generating random Float numbers does not requires a long depth. It is guaranteed that number is not repetating because number is of 32 bit. Which makes generation absolute.
+                However if total number of generation increses from 5000 to 50000 then numbers might start repeting.
+            </p>
+            <hr />
+        </div>
+    }
+    @if (ViewBag.DataPoints3 != "")
+    {
+        <div id="chartContainer3" style="height: 370px; width: 100%; margin-bottom: 15px;"></div>
+
+        <div>
+            <p>
+                Above plot illustrate that generating random Hex numbers does not requires a long depth. It is not guaranteed that number is not repetating.
+                However if number depth increses from 1 to 5000 then numbers might stop repeating.
+            </p>
+            <hr />
+        </div>
+    }
+
+    <style>
+        h4 {
+            text-align: center;
+            width: 100%;
+            margin: auto;
+            color: #5f6368;
+            margin-bottom: 20px;
+        }
+
+        body {
+            background-color: #fff;
+        }
+    </style>
+    @if (ViewBag.DataPoints1 != "")
+    {
+        <script>
+        (function () {
+             function toggleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title: {
+                    text: "Random Numbers Comparision"
+                },
+                axisX: {
+                    title: "Number"
+                },
+                axisY: {
+                    title: "Occurrence",
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: toggleDataSeries
+                },
+                data: [{
+                    type: "scatter",
+                    name: "Integer Between 1 and 100",
+                    markerType: "cross",
+                    showInLegend: true,
+                    toolTipContent: "<span style=\"color:#4F81BC \">{name}</span><br>Number: {x}<br>Occurence: {y}",
+                    dataPoints: @Html.Raw(ViewBag.DataPoints1)
+	                }]
+            });
+            chart.render();
+
+
+        })();
+        </script>
+
+    }
+    @if (ViewBag.DataPoints2 != "")
+    {
+        <script>
+            (function () {
+                 function toggleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+
+                var chart2 = new CanvasJS.Chart("chartContainer2", {
+                    animationEnabled: true,
+                    title: {
+                        text: "Random Numbers Comparision"
+                    },
+                    axisX: {
+                        title: "Number"
+                    },
+                    axisY: {
+                        title: "Occurrence",
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: toggleDataSeries
+                    },
+                    data: [{
+                        type: "scatter",
+                        name: "Float Between 1 and 100",
+                        markerType: "cross",
+                        showInLegend: true,
+                        toolTipContent: "<span style=\"color:#4F81BC \">{name}</span><br>Number: {x}<br>Occurence: {y}",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints2)
+	                }]
+                });
+                chart2.render();
+            })();
+        </script>
+
+    }
+    @if (ViewBag.DataPoints3 != "")
+    {
+        <script>
+            (function () {
+                 function toggleDataSeries(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+                var chart3 = new CanvasJS.Chart("chartContainer3", {
+                    animationEnabled: true,
+                    title: {
+                        text: "Random Numbers Comparision"
+                    },
+                    axisX: {
+                        title: "Number"
+                    },
+                    axisY: {
+                        title: "Occurrence",
+                    },
+                    legend: {
+                        cursor: "pointer",
+                        itemclick: toggleDataSeries
+                    },
+                    data: [{
+                        type: "scatter",
+                        name: "Hex number 0f 4 length",
+                        markerType: "cross",
+                        showInLegend: true,
+                        toolTipContent: "<span style=\"color:#4F81BC \">{name}</span><br>Number: {x}<br>Occurence: {y}",
+                        dataPoints: @Html.Raw(ViewBag.DataPoints3)
+	        }]
+                });
+                chart3.render();
+
+            })();
+        </script>
+
+    }
+
+
+</body>
+</html>    
